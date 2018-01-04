@@ -1,27 +1,11 @@
-import { CoursesService } from './courses.service';
 import { Component } from '@angular/core';
 
 @Component({
     selector: 'courses',
     template: `
-        <h2>{{ title }}</h2>
-        <ul>
-            <li *ngFor="let course of courses">
-                {{ course }}
-            </li>
-        </ul>
-        <img [src]="imageUrl" /><br><br>
-        <button class="btn btn-primary" [class.active]="isActive">Save</button>
-    `,
+        {{ text | summary:10 }}
+    `
 })
-
 export class CoursesComponent {
-    title = "List of courses";
-    courses;
-    imageUrl = "http://lorempixel.com/400/200";
-    isActive = true;
-
-    constructor (service: CoursesService) {
-        this.courses = service.getCourses();
-    }
+    text = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.`
 }
