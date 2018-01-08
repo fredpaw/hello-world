@@ -1,7 +1,6 @@
+import { AuthGuard } from './services/auth-guard.service';
 import { AuthHttp, AUTH_PROVIDERS, provideAuth, AuthConfig } from 'angular2-jwt/angular2-jwt';
 import { OrderService } from './services/order.service';
-import { AdminAuthGuard } from './admin-auth-guard.service';
-import { AuthGuard } from './auth-guard.service';
 import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from './helpers/fake-backend';
 import { AuthService } from './services/auth.service';
@@ -19,12 +18,6 @@ import { AdminComponent } from './admin/admin.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NoAccessComponent } from './no-access/no-access.component';
 
-export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({
-    tokenName: 'token'
-  }), http);
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +34,7 @@ export function getAuthHttp(http) {
     HttpModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
-      { path: 'admin', component: AdminComponent, canActivate: [AdminAuthGuard] },
+      { path: 'admin', component: AdminComponent, canActivate:[AuthGuard] },
       { path: 'login', component: LoginComponent },
       { path: 'no-access', component: NoAccessComponent }
     ])
@@ -51,13 +44,6 @@ export function getAuthHttp(http) {
 
     AuthService,
     AuthGuard,
-    AdminAuthGuard,
-    AuthHttp,
-    {
-      provide: AuthHttp,
-      useFactory: getAuthHttp,
-      deps: [Http]
-    },
 
     // For creating a mock back-end. You don't need these in a real app. 
     fakeBackendProvider,

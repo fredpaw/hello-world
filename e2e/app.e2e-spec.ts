@@ -1,14 +1,16 @@
-import { AppPage } from './app.po';
+import { AuthDemoPage } from './app.po';
 
-describe('hello-world App', () => {
-  let page: AppPage;
+describe('auth-demo App', () => {
+  let page: AuthDemoPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new AuthDemoPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display welcome message', done => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    page.getParagraphText()
+      .then(msg => expect(msg).toEqual('Welcome to app!!'))
+      .then(done, done.fail);
   });
 });
